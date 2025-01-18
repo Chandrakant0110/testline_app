@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../mock/mock_data.dart';
 import '../models/models.dart';
 
 class ApiService {
@@ -28,10 +27,5 @@ class ApiService {
     } catch (e) {
       throw Exception('Failed to load quiz: $e');
     }
-  }
-
-  Future<Quiz> fetchLocally() async {
-    // await Future.delayed(const Duration(milliseconds: 2300));
-    return Quiz.fromJson(mockData);
   }
 }
