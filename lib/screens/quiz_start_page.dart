@@ -99,23 +99,29 @@ class QuizStartPage extends StatelessWidget {
         children: [
           Icon(icon, color: Colors.teal),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.grey.shade700,
-                    ),
-              ),
-              Text(
-                value,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.grey.shade700,
+                      ),
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  value,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w600,
+                      ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
+                ),
+              ],
+            ),
           ),
         ],
       ),

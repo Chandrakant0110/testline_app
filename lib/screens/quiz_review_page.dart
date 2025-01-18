@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
-import '../widgets/option_item.dart';
 import 'quiz_attempts_review_page.dart';
 
 class QuizReviewPage extends StatelessWidget {
