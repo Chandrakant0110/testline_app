@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../models/quiz_model.dart';
 import '../models/question_model.dart';
 import '../widgets/quiz_app_bar.dart';
 import '../widgets/question_card.dart';
 import '../widgets/quiz_bottom_bar.dart';
+import 'quiz_review_page.dart';
 
 class QuizScreen extends StatefulWidget {
   final Quiz quiz;
@@ -20,14 +22,48 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int currentQuestionIndex = 0;
   double totalScore = 0;
+  Timer? questionTimer;
+  int remainingSeconds = 0;
   Question? get currentQuestion => widget.quiz.questions?[currentQuestionIndex];
   final Map<int, int> questionAnswers = {}; // Track answers for each question
+
+  @override
+  void initState() {
+    super.initState();
+    _startQuestionTimer();
+  }
+
+  @override
+  void dispose() {
+    questionTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startQuestionTimer() {
+    questionTimer?.cancel();
+    setState(() {
+      remainingSeconds = widget.quiz.duration ?? 30;
+    });
+
+    questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingSeconds > 0) {
+        setState(() {
+          remainingSeconds--;
+        });
+      } else {
+        _handleNext(); // Auto-move to next question when time's up
+      }
+    });
+  }
 
   void _handleNext() {
     if (currentQuestionIndex < (widget.quiz.questions?.length ?? 1) - 1) {
       setState(() {
         currentQuestionIndex++;
       });
+      _startQuestionTimer();
+    } else {
+      _showQuizReview();
     }
   }
 
@@ -42,6 +78,20 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
+  void _showQuizReview() {
+    questionTimer?.cancel();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => QuizReviewPage(
+          quiz: widget.quiz,
+          userAnswers: questionAnswers,
+          totalScore: totalScore,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +104,22 @@ class _QuizScreenState extends State<QuizScreen> {
               currentIndex: currentQuestionIndex,
               score: totalScore,
             ),
-            const Divider(
-              color: Colors.grey,
-              thickness: 1,
+            const Divider(height: 1),
+            LinearProgressIndicator(
+              value: remainingSeconds / (widget.quiz.duration ?? 30),
+              backgroundColor: Colors.grey.shade200,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                remainingSeconds <= 5 ? Colors.red : Colors.teal,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                '$remainingSeconds seconds remaining',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: remainingSeconds <= 5 ? Colors.red : Colors.grey,
+                    ),
+              ),
             ),
             Expanded(
               child: currentQuestion != null

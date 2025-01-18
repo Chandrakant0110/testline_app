@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testline_app/screens/quiz_screen.dart';
+import 'package:testline_app/screens/quiz_start_page.dart';
 import 'package:testline_app/service/api_service.dart';
 import 'theme/quiz_theme.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             return const Center(child: Text('No quiz data available'));
           }
 
-          return QuizScreen(quiz: snapshot.data!);
+          return QuizStartPage(quiz: snapshot.data!);
         },
       ),
     );
