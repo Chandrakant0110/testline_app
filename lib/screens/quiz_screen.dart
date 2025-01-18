@@ -19,7 +19,9 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   int currentQuestionIndex = 0;
+  double totalScore = 0;
   Question? get currentQuestion => widget.quiz.questions?[currentQuestionIndex];
+  final Map<int, int> questionAnswers = {}; // Track answers for each question
 
   void _handleNext() {
     if (currentQuestionIndex < (widget.quiz.questions?.length ?? 1) - 1) {
@@ -33,6 +35,13 @@ class _QuizScreenState extends State<QuizScreen> {
     _handleNext();
   }
 
+  void _updateScore(double score, int selectedOptionIndex) {
+    setState(() {
+      totalScore += score;
+      questionAnswers[currentQuestionIndex] = selectedOptionIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +52,25 @@ class _QuizScreenState extends State<QuizScreen> {
               title: widget.quiz.title ?? 'Maths Quiz',
               subtitle: '${widget.quiz.questions?.length ?? 0} Questions',
               currentIndex: currentQuestionIndex,
+              score: totalScore,
+            ),
+            const Divider(
+              color: Colors.grey,
+              thickness: 1,
             ),
             Expanded(
               child: currentQuestion != null
                   ? QuestionCard(
                       question: currentQuestion!,
                       questionNumber: currentQuestionIndex + 1,
+                      onScoreUpdate: _updateScore,
+                      correctMarks: double.tryParse(
+                              widget.quiz.correct_answer_marks ?? '1') ??
+                          1.0,
+                      negativeMarks:
+                          double.tryParse(widget.quiz.negative_marks ?? '0') ??
+                              0.0,
+                      selectedAnswer: questionAnswers[currentQuestionIndex],
                     )
                   : const Center(child: Text('No questions available')),
             ),
