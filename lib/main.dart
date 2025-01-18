@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Quiz App',
       theme: QuizTheme.lightTheme,
+      // debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: ApiService().getQuiz(),
         builder: (context, snapshot) {

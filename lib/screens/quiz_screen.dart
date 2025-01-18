@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../models/quiz_model.dart';
 import '../models/question_model.dart';
 import '../widgets/quiz_app_bar.dart';
@@ -90,14 +89,21 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
         content: Text(reason),
         actions: [
           TextButton(
-            onPressed: () {
-              _proctorService.reset(); // Reset proctor service state
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => QuizStartPage(quiz: widget.quiz),
-                ),
-              );
+            onPressed: () async {
+              // First dispose of the current proctor service
+              await _proctorService.dispose();
+              // Then reset its state
+              _proctorService.reset();
+
+              if (mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuizStartPage(quiz: widget.quiz),
+                  ),
+                  (route) => false, // This removes all previous routes
+                );
+              }
             },
             child: const Text('Return to Start'),
           ),

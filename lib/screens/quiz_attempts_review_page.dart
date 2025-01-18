@@ -189,191 +189,193 @@ class _QuestionReviewCard extends StatelessWidget {
         question.options?.indexWhere((option) => option.is_correct ?? false) ??
             -1;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Question $questionNumber',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.teal,
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Question $questionNumber',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.teal,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              question.description ?? '',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 24),
+            ...List.generate(
+              question.options?.length ?? 0,
+              (index) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: OptionItem(
+                  option: question.options![index],
+                  isSelected: userAnswer == index,
+                  showResult: true,
+                  onTap: () {},
                 ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            question.description ?? '',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 24),
-          ...List.generate(
-            question.options?.length ?? 0,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: OptionItem(
-                option: question.options![index],
-                isSelected: userAnswer == index,
-                showResult: true,
-                onTap: () {},
               ),
             ),
-          ),
-          if (question.detailed_solution != null) ...[
-            const SizedBox(height: 24),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: userAnswer == null
-                    ? Colors.grey.shade50
-                    : isCorrect
-                        ? Colors.green.shade50
-                        : Colors.red.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
+            if (question.detailed_solution != null) ...[
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
                   color: userAnswer == null
-                      ? Colors.grey.shade200
+                      ? Colors.grey.shade50
                       : isCorrect
-                          ? Colors.green.shade200
-                          : Colors.red.shade200,
+                          ? Colors.green.shade50
+                          : Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: userAnswer == null
+                        ? Colors.grey.shade200
+                        : isCorrect
+                            ? Colors.green.shade200
+                            : Colors.red.shade200,
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        userAnswer == null
-                            ? Icons.info_outline
-                            : isCorrect
-                                ? Icons.check_circle
-                                : Icons.cancel,
-                        color: userAnswer == null
-                            ? Colors.grey
-                            : isCorrect
-                                ? Colors.green
-                                : Colors.red,
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              userAnswer == null
-                                  ? 'Question Skipped'
-                                  : isCorrect
-                                      ? 'Correct Answer!'
-                                      : 'Incorrect Answer',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                    color: userAnswer == null
-                                        ? Colors.grey
-                                        : isCorrect
-                                            ? Colors.green
-                                            : Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            if (userAnswer == null ||
-                                (!isCorrect && correctAnswerIndex >= 0)) ...[
-                              const SizedBox(height: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          userAnswer == null
+                              ? Icons.info_outline
+                              : isCorrect
+                                  ? Icons.check_circle
+                                  : Icons.cancel,
+                          color: userAnswer == null
+                              ? Colors.grey
+                              : isCorrect
+                                  ? Colors.green
+                                  : Colors.red,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Text(
-                                'Correct answer: ${question.options?[correctAnswerIndex].description}',
+                                userAnswer == null
+                                    ? 'Question Skipped'
+                                    : isCorrect
+                                        ? 'Correct Answer!'
+                                        : 'Incorrect Answer',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyMedium
+                                    .titleMedium
                                     ?.copyWith(
                                       color: userAnswer == null
-                                          ? Colors.grey.shade700
-                                          : Colors.red.shade700,
+                                          ? Colors.grey
+                                          : isCorrect
+                                              ? Colors.green
+                                              : Colors.red,
+                                      fontWeight: FontWeight.bold,
                                     ),
                               ),
+                              if (userAnswer == null ||
+                                  (!isCorrect && correctAnswerIndex >= 0)) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Correct answer: ${question.options?[correctAnswerIndex].description}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        color: userAnswer == null
+                                            ? Colors.grey.shade700
+                                            : Colors.red.shade700,
+                                      ),
+                                ),
+                              ],
                             ],
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Divider(),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Explanation:',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: userAnswer == null
-                              ? Colors.grey.shade700
-                              : isCorrect
-                                  ? Colors.green.shade700
-                                  : Colors.red.shade700,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  MarkdownBody(
-                    data: question.detailed_solution!,
-                    styleSheet: MarkdownStyleSheet(
-                      p: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Explanation:',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: userAnswer == null
-                                ? Colors.grey.shade900
+                                ? Colors.grey.shade700
                                 : isCorrect
-                                    ? Colors.green.shade900
-                                    : Colors.red.shade900,
-                          ),
-                      h1: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: userAnswer == null
-                                ? Colors.grey.shade900
-                                : isCorrect
-                                    ? Colors.green.shade900
-                                    : Colors.red.shade900,
-                          ),
-                      h2: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: userAnswer == null
-                                ? Colors.grey.shade900
-                                : isCorrect
-                                    ? Colors.green.shade900
-                                    : Colors.red.shade900,
-                          ),
-                      listBullet:
-                          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: userAnswer == null
-                                    ? Colors.grey.shade900
-                                    : isCorrect
-                                        ? Colors.green.shade900
-                                        : Colors.red.shade900,
-                              ),
-                      blockquote:
-                          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: userAnswer == null
-                                    ? Colors.grey.shade700
-                                    : isCorrect
-                                        ? Colors.green.shade700
-                                        : Colors.red.shade700,
-                                fontStyle: FontStyle.italic,
-                              ),
-                      code: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: userAnswer == null
-                                ? Colors.grey.shade900
-                                : isCorrect
-                                    ? Colors.green.shade900
-                                    : Colors.red.shade900,
-                            backgroundColor: userAnswer == null
-                                ? Colors.grey.shade100
-                                : isCorrect
-                                    ? Colors.green.shade100
-                                    : Colors.red.shade100,
-                            fontFamily: 'monospace',
+                                    ? Colors.green.shade700
+                                    : Colors.red.shade700,
+                            fontWeight: FontWeight.bold,
                           ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    MarkdownBody(
+                      data: question.detailed_solution!,
+                      styleSheet: MarkdownStyleSheet(
+                        p: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: userAnswer == null
+                                  ? Colors.grey.shade900
+                                  : isCorrect
+                                      ? Colors.green.shade900
+                                      : Colors.red.shade900,
+                            ),
+                        h1: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: userAnswer == null
+                                  ? Colors.grey.shade900
+                                  : isCorrect
+                                      ? Colors.green.shade900
+                                      : Colors.red.shade900,
+                            ),
+                        h2: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: userAnswer == null
+                                  ? Colors.grey.shade900
+                                  : isCorrect
+                                      ? Colors.green.shade900
+                                      : Colors.red.shade900,
+                            ),
+                        listBullet:
+                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: userAnswer == null
+                                      ? Colors.grey.shade900
+                                      : isCorrect
+                                          ? Colors.green.shade900
+                                          : Colors.red.shade900,
+                                ),
+                        blockquote:
+                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: userAnswer == null
+                                      ? Colors.grey.shade700
+                                      : isCorrect
+                                          ? Colors.green.shade700
+                                          : Colors.red.shade700,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                        code: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: userAnswer == null
+                                  ? Colors.grey.shade900
+                                  : isCorrect
+                                      ? Colors.green.shade900
+                                      : Colors.red.shade900,
+                              backgroundColor: userAnswer == null
+                                  ? Colors.grey.shade100
+                                  : isCorrect
+                                      ? Colors.green.shade100
+                                      : Colors.red.shade100,
+                              fontFamily: 'monospace',
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
