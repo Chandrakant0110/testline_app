@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'question_model.dart';
 
 class Quiz {

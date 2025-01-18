@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:testline_app/models/practice_material_model.dart';
 
 class ReadingMaterial {

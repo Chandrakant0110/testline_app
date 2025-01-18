@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'option_model.dart';
 import 'reading_material_model.dart';
 
