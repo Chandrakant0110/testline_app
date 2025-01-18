@@ -37,7 +37,7 @@ class Quiz {
   final List<Question>? questions;
   final int? progress;
 
-  Quiz(
+  Quiz({
     this.id,
     this.name,
     this.title,
@@ -73,5 +73,48 @@ class Quiz {
     this.reading_materials,
     this.questions,
     this.progress,
-  );
+  });
+
+  factory Quiz.fromJson(Map<String, dynamic> json) {
+    return Quiz(
+      id: json['id'],
+      name: json['name'],
+      title: json['title'],
+      description: json['description'],
+      difficulty_level: json['difficulty_level'],
+      topic: json['topic'],
+      time: json['time'],
+      is_published: json['is_published'],
+      created_at: json['created_at'],
+      updated_at: json['updated_at'],
+      duration: json['duration'],
+      end_time: json['end_time'],
+      negative_marks: json['negative_marks'],
+      correct_answer_marks: json['correct_answer_marks'],
+      shuffle: json['shuffle'],
+      show_answers: json['show_answers'],
+      lock_solutions: json['lock_solutions'],
+      is_form: json['is_form'],
+      show_mastery_option: json['show_mastery_option'],
+      reading_material: json['reading_material'],
+      quiz_type: json['quiz_type'],
+      is_custom: json['is_custom'],
+      banner_id: json['banner_id'],
+      exam_id: json['exam_id'],
+      show_unanswered: json['show_unanswered'],
+      ends_at: json['ends_at'],
+      lives: json['lives'],
+      live_count: json['live_count'],
+      coin_count: json['coin_count'],
+      questions_count: json['questions_count'],
+      daily_date: json['daily_date'],
+      max_mistake_count: json['max_mistake_count'],
+      reading_materials: json['reading_materials'],
+      questions: json['questions'] != null
+          ? List<Question>.from(
+              json['questions'].map((x) => Question.fromJson(x)))
+          : null,
+      progress: json['progress'],
+    );
+  }
 }

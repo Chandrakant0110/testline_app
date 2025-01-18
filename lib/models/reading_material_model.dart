@@ -9,7 +9,7 @@ class ReadingMaterial {
   final List? content_sections;
   final PracticeMaterial? practice_material;
 
-  ReadingMaterial(
+  ReadingMaterial({
     this.id,
     this.keywords,
     this.content,
@@ -17,5 +17,19 @@ class ReadingMaterial {
     this.updated_at,
     this.content_sections,
     this.practice_material,
-  );
+  });
+
+  factory ReadingMaterial.fromJson(Map<String, dynamic> json) {
+    return ReadingMaterial(
+      id: json['id'],
+      keywords: json['keywords'],
+      content: json['content'],
+      created_at: json['created_at'],
+      updated_at: json['updated_at'],
+      content_sections: json['content_sections'],
+      practice_material: json['practice_material'] != null
+          ? PracticeMaterial.fromJson(json['practice_material'])
+          : null,
+    );
+  }
 }

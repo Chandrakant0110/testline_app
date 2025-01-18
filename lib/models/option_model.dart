@@ -8,7 +8,7 @@ class Option {
   final bool? unanswered;
   final String? photo_url;
 
-  Option(
+  Option({
     this.id,
     this.description,
     this.question_id,
@@ -17,5 +17,19 @@ class Option {
     this.updated_at,
     this.unanswered,
     this.photo_url,
-  );
+  });
+
+  factory Option.fromJson(Map<String, dynamic> json) {
+    return Option(
+      id: json['id'],
+      description: json['description'],
+      question_id: json['question_id'],
+      is_correct: json['is_correct'],
+      created_at: json['created_at'],
+      updated_at: json['updated_at'],
+      unanswered: json['unanswered'],
+      photo_url: json['photo_url'],
+    );
+  }
+  
 }
