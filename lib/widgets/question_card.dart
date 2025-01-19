@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../models/question_model.dart';
+import '../service/feedback_service.dart';
 import 'option_item.dart';
 
 class QuestionCard extends StatefulWidget {
@@ -28,6 +29,7 @@ class QuestionCard extends StatefulWidget {
 }
 
 class _QuestionCardState extends State<QuestionCard> {
+  final FeedbackService _feedbackService = FeedbackService();
   bool get showExplanation =>
       widget.selectedAnswer != null || widget.isReviewMode;
   bool get showResult => widget.selectedAnswer != null || widget.isReviewMode;
@@ -39,7 +41,7 @@ class _QuestionCardState extends State<QuestionCard> {
       ) ??
       -1;
 
-  void _handleOptionTap(int index) {
+  void _handleOptionTap(int index) async {
     if (widget.selectedAnswer != null || widget.isReviewMode) return;
 
     final selectedOption = widget.question.options?[index];
@@ -47,9 +49,16 @@ class _QuestionCardState extends State<QuestionCard> {
         widget.onScoreUpdate != null &&
         widget.correctMarks != null &&
         widget.negativeMarks != null) {
-      final score = (selectedOption.is_correct ?? false)
-          ? widget.correctMarks!
-          : -widget.negativeMarks!;
+      final isCorrect = selectedOption.is_correct ?? false;
+      final score = isCorrect ? widget.correctMarks! : -widget.negativeMarks!;
+
+      // Play appropriate feedback
+      if (isCorrect) {
+        await _feedbackService.playSuccess();
+      } else {
+        await _feedbackService.playError();
+      }
+
       widget.onScoreUpdate!(score, index);
     }
   }
