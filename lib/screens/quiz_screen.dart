@@ -205,8 +205,8 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
       );
     }
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         body: SafeArea(
           child: Column(
