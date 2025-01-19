@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  just_audio_windows
   screen_capturer
   screen_retriever
   window_manager
