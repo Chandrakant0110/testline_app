@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class QuizTheme {
   static ThemeData get lightTheme {
+    const montserrat = TextStyle(fontFamily: 'Montserrat');
+
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
@@ -12,28 +14,34 @@ class QuizTheme {
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 0,
+        titleTextStyle: TextStyle(
+          fontFamily: 'Montserrat',
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+        ),
       ),
-      textTheme: const TextTheme(
-        headlineSmall: TextStyle(
+      textTheme: TextTheme(
+        headlineSmall: montserrat.copyWith(
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: Colors.black87,
         ),
-        titleLarge: TextStyle(
+        titleLarge: montserrat.copyWith(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: Colors.black87,
         ),
-        titleMedium: TextStyle(
+        titleMedium: montserrat.copyWith(
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: Colors.black87,
         ),
-        bodyLarge: TextStyle(
+        bodyLarge: montserrat.copyWith(
           fontSize: 16,
           color: Colors.black87,
         ),
-        bodyMedium: TextStyle(
+        bodyMedium: montserrat.copyWith(
           fontSize: 14,
           color: Colors.black54,
         ),
@@ -45,6 +53,10 @@ class QuizTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          textStyle: montserrat.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -52,6 +64,10 @@ class QuizTheme {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
+          ),
+          textStyle: montserrat.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
