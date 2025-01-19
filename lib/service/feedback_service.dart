@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:audio_session/audio_session.dart';
+import 'dart:async' show unawaited;
 
 class FeedbackService {
   static final FeedbackService _instance = FeedbackService._internal();
@@ -13,10 +14,12 @@ class FeedbackService {
   bool _isSoundEnabled = true;
   bool _isHapticEnabled = true;
   bool _isInitialized = false;
+  bool _isInitializing = false;
 
   // Initialize audio files
   Future<void> initialize() async {
-    if (_isInitialized) return;
+    if (_isInitialized || _isInitializing) return;
+    _isInitializing = true;
 
     try {
       // Create new instances of AudioPlayer
@@ -33,24 +36,27 @@ class FeedbackService {
         ),
       ));
 
-      // Load audio files
+      // Preload audio files
       await Future.wait([
         _successPlayer!.setAsset('assets/sfx/sucess_effect.mp3'),
         _errorPlayer!.setAsset('assets/sfx/error_sound.mp3'),
       ]);
 
-      // Set volume and other properties
+      // Set volume and preload
       await Future.wait([
         _successPlayer!.setVolume(0.5),
         _errorPlayer!.setVolume(0.5),
+        _successPlayer!.load(),
+        _errorPlayer!.load(),
       ]);
 
       _isInitialized = true;
     } catch (e) {
       debugPrint('Error initializing audio: $e');
-      // Reset state on error
       _isInitialized = false;
       await dispose();
+    } finally {
+      _isInitializing = false;
     }
   }
 
@@ -61,11 +67,7 @@ class FeedbackService {
     try {
       if (isSuccess) {
         await HapticFeedback.lightImpact();
-        await Future.delayed(const Duration(milliseconds: 100));
-        await HapticFeedback.lightImpact();
       } else {
-        await HapticFeedback.heavyImpact();
-        await Future.delayed(const Duration(milliseconds: 200));
         await HapticFeedback.heavyImpact();
       }
     } catch (e) {
@@ -75,7 +77,7 @@ class FeedbackService {
 
   // Play success sound and vibration
   Future<void> playSuccess() async {
-    if (!_isInitialized || _successPlayer == null) {
+    if (!_isInitialized && !_isInitializing) {
       try {
         await initialize();
       } catch (e) {
@@ -84,8 +86,7 @@ class FeedbackService {
       }
     }
 
-    // Play haptic feedback first for better synchronization
-    await _playHapticFeedback(true);
+    unawaited(_playHapticFeedback(true));
 
     if (_isSoundEnabled && _isInitialized && _successPlayer != null) {
       try {
@@ -93,7 +94,6 @@ class FeedbackService {
         await _successPlayer!.play();
       } catch (e) {
         debugPrint('Error playing success sound: $e');
-        // Try to reinitialize on error
         _isInitialized = false;
       }
     }
@@ -101,7 +101,7 @@ class FeedbackService {
 
   // Play error sound and vibration
   Future<void> playError() async {
-    if (!_isInitialized || _errorPlayer == null) {
+    if (!_isInitialized && !_isInitializing) {
       try {
         await initialize();
       } catch (e) {
@@ -110,8 +110,7 @@ class FeedbackService {
       }
     }
 
-    // Play haptic feedback first for better synchronization
-    await _playHapticFeedback(false);
+    unawaited(_playHapticFeedback(false));
 
     if (_isSoundEnabled && _isInitialized && _errorPlayer != null) {
       try {
@@ -119,7 +118,6 @@ class FeedbackService {
         await _errorPlayer!.play();
       } catch (e) {
         debugPrint('Error playing error sound: $e');
-        // Try to reinitialize on error
         _isInitialized = false;
       }
     }
@@ -138,6 +136,7 @@ class FeedbackService {
   // Dispose resources
   Future<void> dispose() async {
     _isInitialized = false;
+    _isInitializing = false;
     try {
       await Future.wait([
         _successPlayer?.dispose() ?? Future.value(),

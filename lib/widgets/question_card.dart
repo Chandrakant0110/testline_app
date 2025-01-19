@@ -54,9 +54,9 @@ class _QuestionCardState extends State<QuestionCard> {
 
       // Play appropriate feedback
       if (isCorrect) {
-        await _feedbackService.playSuccess();
+        _feedbackService.playSuccess();
       } else {
-        await _feedbackService.playError();
+        _feedbackService.playError();
       }
 
       widget.onScoreUpdate!(score, index);
