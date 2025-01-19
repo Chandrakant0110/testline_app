@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import '../models/quiz_model.dart';
 import 'quiz_screen.dart';
 
@@ -16,24 +18,36 @@ class QuizStartPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                quiz.title ?? 'Quiz',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.teal,
-                      fontWeight: FontWeight.bold,
-                    ),
+              AnimatedTextKit(
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    quiz.title ?? 'Quiz',
+                    textStyle:
+                        Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              color: Colors.teal,
+                              fontWeight: FontWeight.bold,
+                            ),
+                    speed: const Duration(milliseconds: 100),
+                  ),
+                ],
+                totalRepeatCount: 1,
+                displayFullTextOnTap: true,
               ),
               const SizedBox(height: 8),
               Text(
                 quiz.topic ?? '',
                 style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              )
+                  .animate()
+                  .fadeIn(delay: 500.ms, duration: 500.ms)
+                  .slideX(begin: -0.2, end: 0),
               const SizedBox(height: 32),
               _buildInfoCard(
                 context,
                 title: 'Duration',
                 value: '${quiz.duration ?? 30} seconds per question',
                 icon: Icons.timer,
+                delay: 0,
               ),
               const SizedBox(height: 16),
               _buildInfoCard(
@@ -41,6 +55,7 @@ class QuizStartPage extends StatelessWidget {
                 title: 'Questions',
                 value: '${quiz.questions?.length ?? 0} questions',
                 icon: Icons.quiz,
+                delay: 200,
               ),
               const SizedBox(height: 16),
               _buildInfoCard(
@@ -49,6 +64,7 @@ class QuizStartPage extends StatelessWidget {
                 value:
                     '+${quiz.correct_answer_marks} for correct, -${quiz.negative_marks} for incorrect',
                 icon: Icons.grade,
+                delay: 400,
               ),
               const Spacer(),
               SizedBox(
@@ -57,8 +73,21 @@ class QuizStartPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => QuizScreen(quiz: quiz),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            QuizScreen(quiz: quiz),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.easeInOutCubic;
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+                          return SlideTransition(
+                              position: offsetAnimation, child: child);
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
                       ),
                     );
                   },
@@ -74,7 +103,10 @@ class QuizStartPage extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-              ),
+              )
+                  .animate()
+                  .fadeIn(delay: 800.ms, duration: 500.ms)
+                  .slideY(begin: 0.2, end: 0),
             ],
           ),
         ),
@@ -87,6 +119,7 @@ class QuizStartPage extends StatelessWidget {
     required String title,
     required String value,
     required IconData icon,
+    required int delay,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -125,6 +158,9 @@ class QuizStartPage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+        .animate()
+        .fadeIn(delay: delay.ms, duration: 500.ms)
+        .slideX(begin: 0.2, end: 0);
   }
 }

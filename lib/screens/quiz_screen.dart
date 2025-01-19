@@ -6,6 +6,7 @@ import '../widgets/quiz_app_bar.dart';
 import '../widgets/question_card.dart';
 import '../widgets/quiz_bottom_bar.dart';
 import '../service/proctor_service.dart';
+import '../service/feedback_service.dart';
 import 'quiz_review_page.dart';
 import 'quiz_start_page.dart';
 
@@ -29,14 +30,31 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
   Question? get currentQuestion => widget.quiz.questions?[currentQuestionIndex];
   final Map<int, int> questionAnswers = {};
   final ProctorService _proctorService = ProctorService();
+  final FeedbackService _feedbackService = FeedbackService();
   bool _isTestTerminated = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _initializeProctoring();
+    _initializeServices();
     _startTimer();
+  }
+
+  Future<void> _initializeServices() async {
+    try {
+      await _feedbackService.initialize();
+      await _initializeProctoring();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to initialize services: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   Future<void> _initializeProctoring() async {
@@ -117,6 +135,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     questionTimer?.cancel();
     _proctorService.dispose();
+    _feedbackService.dispose();
     super.dispose();
   }
 
@@ -205,8 +224,8 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
       );
     }
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         body: SafeArea(
           child: Column(
