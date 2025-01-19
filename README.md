@@ -15,22 +15,22 @@ Check out Testline in action:
 Here's a walkthrough of the app interface:
 
 ### Getting Started
-![Landing Screen](assets/screenshots/1_landing_screen.jpg)
+<img src="assets/screenshots/1_landing_screen.jpg" alt="Landing Screen" width="150"/>
 
 ### Quiz Experience
-![Quiz Interface](assets/screenshots/2_quiz_screen.jpg)
-![Quiz Progress](assets/screenshots/3_quiz_screen.jpg)
+<img src="assets/screenshots/2_quiz_screen.jpg" alt="Quiz Interface" width="150"/>
+<img src="assets/screenshots/3_quiz_screen.jpg" alt="Quiz Progress" width="150"/>
 
 ### Security Features
-![Window Switching Detection](assets/screenshots/4_quiz_window_switching.jpg)
-![Test Termination](assets/screenshots/5_quiz_test_termination.jpg)
+<img src="assets/screenshots/4_quiz_window_switching.jpg" alt="Window Switching Detection" width="150"/>
+<img src="assets/screenshots/5_quiz_test_termination.jpg" alt="Test Termination" width="150"/>
 
 ### Results & Review
-![Score Summary](assets/screenshots/6_score_screen.jpg)
-![Review Questions](assets/screenshots/7_review_screen.jpg)
-![Detailed Answers](assets/screenshots/8_review_screen.jpg)
-![Performance Analysis](assets/screenshots/9_review_screen.jpg)
-![Completion](assets/screenshots/10_thank_you_screen.jpg)
+<img src="assets/screenshots/6_score_screen.jpg" alt="Score Summary" width="150"/>
+<img src="assets/screenshots/7_review_screen.jpg" alt="Review Questions" width="150"/>
+<img src="assets/screenshots/8_review_screen.jpg" alt="Detailed Answers" width="150"/>
+<img src="assets/screenshots/9_review_screen.jpg" alt="Performance Analysis" width="150"/>
+<img src="assets/screenshots/10_thank_you_screen.jpg" alt="Completion" width="150"/>
 
 ## What makes Testline special?
 
