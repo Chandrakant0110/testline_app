@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import 'quiz_attempts_review_page.dart';
+import 'thank_you_page.dart';
 
 class QuizReviewPage extends StatelessWidget {
   final Quiz quiz;
@@ -52,53 +53,80 @@ class QuizReviewPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  FilledButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QuizAttemptsReviewPage(
-                            quiz: quiz,
-                            userAnswers: userAnswers,
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => QuizAttemptsReviewPage(
+                              quiz: quiz,
+                              userAnswers: userAnswers,
+                              score: totalScore.toInt(),
+                            ),
                           ),
+                        );
+                      },
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 16,
                         ),
-                      );
-                    },
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 16,
+                        backgroundColor: Colors.teal.shade50,
+                        foregroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: Colors.teal.shade200),
+                        ),
                       ),
-                      backgroundColor: Colors.teal.shade50,
-                      foregroundColor: Colors.teal,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: Colors.teal.shade200),
+                      icon: const Icon(Icons.rate_review),
+                      label: const Text(
+                        'Review Attempts',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    icon: const Icon(Icons.rate_review),
-                    label: const Text(
-                      'Review Attempts',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () => Navigator.of(context)
-                          .popUntil((route) => route.isFirst),
+                    child: FilledButton.icon(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ThankYouPage(
+                              score: totalScore.toInt(),
+                              totalQuestions: totalQuestions,
+                              correctAnswerMarks: double.parse(
+                                      quiz.correct_answer_marks?.toString() ??
+                                          '1.0')
+                                  .toInt(),
+                            ),
+                          ),
+                        );
+                      },
                       style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 16,
+                        ),
                         backgroundColor: Colors.teal,
+                        foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
+                      icon: const Icon(Icons.check_circle),
+                      label: const Text(
                         'Finish Review',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

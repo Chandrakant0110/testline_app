@@ -5,12 +5,14 @@ import '../widgets/question_card.dart';
 class QuizAttemptsReviewPage extends StatefulWidget {
   final Quiz quiz;
   final Map<int, int> userAnswers;
+  final int score;
 
   const QuizAttemptsReviewPage({
-    super.key,
+    Key? key,
     required this.quiz,
     required this.userAnswers,
-  });
+    required this.score,
+  }) : super(key: key);
 
   @override
   State<QuizAttemptsReviewPage> createState() => _QuizAttemptsReviewPageState();
@@ -52,11 +54,11 @@ class _QuizAttemptsReviewPageState extends State<QuizAttemptsReviewPage> {
   }
 
   bool _isAnswerCorrect(int questionIndex) {
-    final userAnswer = widget.userAnswers[questionIndex];
-    if (userAnswer == null) return false;
+    if (!widget.userAnswers.containsKey(questionIndex)) return false;
 
+    final userAnswer = widget.userAnswers[questionIndex];
     final question = widget.quiz.questions?[questionIndex];
-    final selectedOption = question?.options?[userAnswer];
+    final selectedOption = question?.options?[userAnswer ?? 0];
     return selectedOption?.is_correct ?? false;
   }
 
