@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
-import 'package:testline_app/screens/quiz_start_page.dart';
-import 'package:testline_app/service/api_service.dart';
+import 'screens/quiz_start_page.dart';
+import 'service/api_service.dart';
 import 'package:window_manager/window_manager.dart';
 import 'theme/quiz_theme.dart';
 
