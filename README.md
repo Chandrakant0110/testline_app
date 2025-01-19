@@ -15,22 +15,32 @@ Check out Testline in action:
 Here's a walkthrough of the app interface:
 
 ### Getting Started
-<img src="assets/screenshots/1_landing_screen.jpg" alt="Landing Screen" width="150"/>
+<p align="center">
+  <img src="assets/screenshots/1_landing_screen.jpg" alt="Landing Screen" width="150"/>
+</p>
 
 ### Quiz Experience
-<img src="assets/screenshots/2_quiz_screen.jpg" alt="Quiz Interface" width="150"/>
-<img src="assets/screenshots/3_quiz_screen.jpg" alt="Quiz Progress" width="150"/>
+<p align="center">
+  <img src="assets/screenshots/2_quiz_screen.jpg" alt="Quiz Interface" width="150" style="margin-right: 10px;"/>
+  <img src="assets/screenshots/3_quiz_screen.jpg" alt="Quiz Progress" width="150"/>
+</p>
 
 ### Security Features
-<img src="assets/screenshots/4_quiz_window_switching.jpg" alt="Window Switching Detection" width="150"/>
-<img src="assets/screenshots/5_quiz_test_termination.jpg" alt="Test Termination" width="150"/>
+<p align="center">
+  <img src="assets/screenshots/4_quiz_window_switching.jpg" alt="Window Switching Detection" width="150" style="margin-right: 10px;"/>
+  <img src="assets/screenshots/5_quiz_test_termination.jpg" alt="Test Termination" width="150"/>
+</p>
 
 ### Results & Review
-<img src="assets/screenshots/6_score_screen.jpg" alt="Score Summary" width="150"/>
-<img src="assets/screenshots/7_review_screen.jpg" alt="Review Questions" width="150"/>
-<img src="assets/screenshots/8_review_screen.jpg" alt="Detailed Answers" width="150"/>
-<img src="assets/screenshots/9_review_screen.jpg" alt="Performance Analysis" width="150"/>
-<img src="assets/screenshots/10_thank_you_screen.jpg" alt="Completion" width="150"/>
+<p align="center">
+  <img src="assets/screenshots/6_score_screen.jpg" alt="Score Summary" width="150" style="margin-right: 10px;"/>
+  <img src="assets/screenshots/7_review_screen.jpg" alt="Review Questions" width="150" style="margin-right: 10px;"/>
+  <img src="assets/screenshots/8_review_screen.jpg" alt="Detailed Answers" width="150"/>
+</p>
+<p align="center">
+  <img src="assets/screenshots/9_review_screen.jpg" alt="Performance Analysis" width="150" style="margin-right: 10px;"/>
+  <img src="assets/screenshots/10_thank_you_screen.jpg" alt="Completion" width="150"/>
+</p>
 
 ## What makes Testline special?
 
