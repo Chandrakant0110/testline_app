@@ -1,95 +1,120 @@
-# quixzy.ai
+# Testline App
 
-A modern, feature-rich quiz application built with Flutter that supports both mobile and desktop platforms.
+A modern quiz application built with Flutter, designed to provide a seamless testing experience across mobile and desktop platforms. Download our [Windows App](https://github.com/Chandrakant0110/testline_app/releases/download/v1.0.2/Release.exe) or [Android App](https://github.com/Chandrakant0110/testline_app/releases/download/v1.0.2/testline_app_v1.0.2.apk).
 
-## Features
+[![Repository](https://img.shields.io/badge/github-testline__app-blue?logo=github)](https://github.com/Chandrakant0110/testline_app)
 
-### Quiz Taking Experience
-- Dynamic quiz loading with real-time scoring
-- Timed questions with configurable duration
-- Progress tracking and score display
-- Skip and navigation options for questions
-- Beautiful animated UI with smooth transitions
-- Support for markdown-formatted questions
+## App Previews
 
-### Quiz Configuration
-- Configurable scoring system with positive and negative marking
-- Question shuffling option
-- Customizable quiz duration
-- Support for different quiz types and difficulty levels
-- Reading material integration
-- Question feedback system
+Check out Testline in action:
+- [Windows App Preview](https://youtu.be/u5r25c1j1o8)
+- [Android App Preview](https://youtu.be/nTxhdRwwLic)
 
-### Review System
-- Detailed quiz review after completion
-- Question-by-question review with correct answers
-- Score summary and statistics
-- Attempt history tracking
-- Performance analytics
+## Screenshots
 
-### Proctoring Features
-- Built-in proctoring service
-- App lifecycle state monitoring
-- Test termination capabilities
+Here's a walkthrough of the app interface:
+
+### Getting Started
+![Landing Screen](assets/screenshots/1_landing_screen.jpg)
+
+### Quiz Experience
+![Quiz Interface](assets/screenshots/2_quiz_screen.jpg)
+![Quiz Progress](assets/screenshots/3_quiz_screen.jpg)
+
+### Security Features
+![Window Switching Detection](assets/screenshots/4_quiz_window_switching.jpg)
+![Test Termination](assets/screenshots/5_quiz_test_termination.jpg)
+
+### Results & Review
+![Score Summary](assets/screenshots/6_score_screen.jpg)
+![Review Questions](assets/screenshots/7_review_screen.jpg)
+![Detailed Answers](assets/screenshots/8_review_screen.jpg)
+![Performance Analysis](assets/screenshots/9_review_screen.jpg)
+![Completion](assets/screenshots/10_thank_you_screen.jpg)
+
+## What makes Testline special?
+
+- 📱 **Cross-Platform**: Works smoothly on both mobile and desktop
+- ⚡ **Real-time Scoring**: Instant feedback as you progress
+- 🔒 **Secure Testing**: Built-in proctoring to maintain test integrity
+- 🎨 **Modern UI**: Clean, intuitive interface with smooth animations
+- 📊 **Detailed Analytics**: Comprehensive performance tracking
+
+## Core Features
+
+### For Test Takers
+- Take timed quizzes with flexible navigation
+- Track your progress in real-time
+- Review answers with detailed explanations
+- Access study materials within the app
+- Get instant performance analytics
+
+### For Test Creators
+- Configure custom scoring rules
+- Set time limits per question/quiz
+- Enable/disable question shuffling
+- Add rich markdown-formatted questions
+- Integrate study materials
+
+### Security Features
+- App state monitoring
 - Anti-cheating measures
-
-### Cross-Platform Support
-- Responsive design for mobile devices
-- Desktop support (Windows, Linux, macOS)
-- Configurable window management for desktop platforms
-- Minimum window size enforcement (800x600)
+- Secure test termination
+- Activity logging
 
 ## Getting Started
 
-### Prerequisites
-- Flutter SDK
+### Requirements
+- Flutter SDK (latest stable)
 - Dart SDK
-- For desktop development: Platform-specific requirements (Windows/Linux/macOS)
+- For desktop: Windows/Linux/macOS development setup
 
-### Installation
+### Quick Start
 
-1. Clone the repository:
+1. Clone the repo:
 ```bash
-git clone [repository-url]
+git clone https://github.com/Chandrakant0110/testline_app
 ```
 
-2. Navigate to the project directory:
+2. Move to project directory:
 ```bash
 cd testline_app
 ```
 
-3. Install dependencies:
+3. Get dependencies:
 ```bash
 flutter pub get
 ```
 
-4. Run the application:
+4. Launch the app:
 ```bash
 flutter run
 ```
 
-## Project Structure
-
+## Project Layout
 ```
 lib/
-├── models/          # Data models for quiz, questions, etc.
-├── screens/         # Main application screens
-├── service/         # API and other services
-├── theme/          # App theming
-└── widgets/        # Reusable UI components
+├── models/      # Data structures
+├── screens/     # UI screens
+├── service/     # Business logic
+├── theme/       # Styling
+└── widgets/     # Reusable components
 ```
 
-## Dependencies
+## Tech Stack
 
-- `flutter_markdown`: For rendering markdown content
-- `window_manager`: For desktop window management
-- `flutter_animate`: For UI animations
-- `animated_text_kit`: For text animations
+- **UI**: Flutter & Dart
+- **Animations**: flutter_animate, animated_text_kit
+- **Content**: flutter_markdown
+- **Desktop**: window_manager
 
-## Contributing
+## Want to Contribute?
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We welcome contributions! Feel free to:
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License - feel free to use and modify as needed.
